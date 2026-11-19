@@ -61,6 +61,17 @@ natively on aarch64 Termux requires the local SDK/NDK shims that the script
 sets up; the standard, most reliable route is still an x86_64 Linux host
 (or WSL / GitHub Actions) with Buildozer.
 
+### GitHub Actions (recommended)
+
+This repository includes `.github/workflows/build.yml`. Every push to `main`
+builds the APK on Ubuntu and uploads it as the `RPSGame-apk` artifact.
+
+```bash
+gh workflow run build.yml
+gh run watch
+gh run download <run-id> -n RPSGame-apk -D ~/storage/downloads/
+```
+
 ## Project layout
 
 ```

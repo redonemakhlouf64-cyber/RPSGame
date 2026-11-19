@@ -184,13 +184,15 @@ def test_audio(rep: Report):
 
 def test_storage(rep: Report):
     print("\n[5/7] Persistence")
-    from logic.storage import Store
+    from logic.storage import SETTINGS_FILE as SF, Store, _write_json
     st = Store()
     before = st.settings
     st.set("_selftest_probe", 123)
     st2 = Store()
     rep.ok("settings round-trip to disk", st2.get("_selftest_probe") == 123)
-    st.set_many(before)
+    # Restore the exact pre-test settings; set_many() would leave the probe.
+    st._settings = dict(before)
+    _write_json(SF, st._settings)
     rep.ok("settings file exists", os.path.exists(SETTINGS_FILE))
     rep.ok("history file path accessible", os.path.isdir(os.path.dirname(HISTORY_FILE)))
 
