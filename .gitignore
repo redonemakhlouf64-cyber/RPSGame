@@ -1,0 +1,9 @@
+.buildozer/
+bin/
+.venv/
+__pycache__/
+*.pyc
+*.apk
+*.aab
+build_apk_run.log
+build_done.log
