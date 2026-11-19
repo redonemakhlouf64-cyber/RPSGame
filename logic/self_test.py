@@ -45,9 +45,10 @@ def test_syntax(rep: Report):
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     bad = []
     files = 0
-    for dirpath, _dirs, names in os.walk(root):
-        if any(part in dirpath for part in ("__pycache__", "/assets", "/shots")):
-            continue
+    skip_dirs = {".buildozer", "bin", ".git", "__pycache__", "assets",
+                 "shots", "storage", ".venv"}
+    for dirpath, dirs, names in os.walk(root):
+        dirs[:] = [d for d in dirs if d not in skip_dirs]
         for name in names:
             if not name.endswith(".py"):
                 continue
